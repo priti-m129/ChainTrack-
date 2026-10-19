@@ -1,0 +1,19 @@
+{
+  "name": "supplychain-dapp",
+  "version": "1.0.0",
+  "description": "Decentralized supply chain tracking DApp (Solidity + Hardhat + ethers.js)",
+  "scripts": {
+    "compile": "hardhat compile",
+    "test": "hardhat test",
+    "node": "hardhat node",
+    "deploy": "hardhat run scripts/deploy.js --network localhost",
+    "seed": "hardhat run scripts/seed.js --network localhost",
+    "frontend": "http-server frontend -p 3000 -c-1 -o",
+    "demo": "hardhat run scripts/demo.js --network localhost"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "hardhat": "^2.22.0",
+    "http-server": "^14.1.1"
+  }
+}

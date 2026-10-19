@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ChainTrack – Decentralized Supply Chain</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/ethers@6.13.4/dist/ethers.umd.min.js"></script>
+</head>
+<body>
+  <header>
+    <div class="brand">⛓️ ChainTrack <span>Decentralized Supply Chain Tracker</span></div>
+    <div class="wallet">
+      <span id="roleBadge" class="badge hidden"></span>
+      <span id="account">Not connected</span>
+      <button id="connectBtn">Connect MetaMask</button>
+    </div>
+  </header>
+
+  <main>
+    <div id="notice" class="notice hidden"></div>
+
+    <section class="card" id="trackCard">
+      <h2>🔍 Track a Product</h2>
+      <div class="row">
+        <input id="trackId" type="number" min="1" placeholder="Product ID" />
+        <button id="trackBtn">Track</button>
+      </div>
+      <div id="trackResult"></div>
+    </section>
+
+    <section class="card hidden" id="adminCard">
+      <h2>👑 Admin – Register Participant</h2>
+      <div class="grid">
+        <input id="pAddress" placeholder="Wallet address (0x...)" />
+        <input id="pName" placeholder="Company name" />
+        <select id="pRole">
+          <option value="1">Manufacturer</option>
+          <option value="2">Distributor</option>
+          <option value="4">Shipper</option>
+          <option value="6">Warehouse</option>
+          <option value="5">Customs</option>
+          <option value="3">Retailer</option>
+        </select>
+        <button id="registerBtn">Register</button>
+      </div>
+    </section>
+
+    <section class="card hidden" id="makerCard">
+      <h2>🏭 Step 1 – Manufacturer: Create Product</h2>
+      <div class="grid">
+        <input id="prodName" placeholder="Product name" />
+        <input id="prodOrigin" placeholder="Factory location (e.g. Los Angeles Plant)" />
+        <input id="prodCountry" placeholder="Country (e.g. USA)" />
+        <button id="createBtn">Create Product</button>
+      </div>
+    </section>
+
+    <section class="card hidden" id="transferCard">
+      <h2>🚚 Step 2 – Transfer Product to the next party</h2>
+      <p class="hint">Repeat this step for every middleman: distributor, shipper, warehouse, customs… Enter where the product is going and how far it travelled since the last checkpoint.</p>
+      <div class="grid">
+        <input id="tId" type="number" min="1" placeholder="Product ID" />
+        <input id="tTo" list="partList" placeholder="Receiver wallet (0x...) – or pick below" />
+        <input id="tLoc" placeholder="Delivered to (e.g. Mumbai Port)" />
+        <input id="tCountry" placeholder="Country (e.g. India)" />
+        <input id="tKm" type="number" min="0" placeholder="Distance from last point (km)" />
+        <input id="tNote" placeholder="Note (optional)" />
+        <button id="transferBtn">Transfer</button>
+      </div>
+      <datalist id="partList"></datalist>
+    </section>
+
+    <section class="card hidden" id="customsCard">
+      <h2>🛃 Customs – Clear Product for Import</h2>
+      <div class="grid">
+        <input id="cId" type="number" min="1" placeholder="Product ID" />
+        <input id="cNote" placeholder="Note (e.g. Duty paid)" />
+        <button id="clearBtn">Clear Customs</button>
+      </div>
+    </section>
+
+    <section class="card hidden" id="soldCard">
+      <h2>🛒 Step 3 – Retailer: Mark as Sold</h2>
+      <div class="grid">
+        <input id="sId" type="number" min="1" placeholder="Product ID" />
+        <input id="sNote" placeholder="Note (optional)" />
+        <button id="soldBtn">Mark Sold</button>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>📦 All Products</h2>
+      <button id="refreshBtn" class="secondary">Refresh</button>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>ID</th><th>Name</th><th>Origin</th><th>Status</th><th>Distance</th><th>Current Holder</th></tr>
+          </thead>
+          <tbody id="productRows"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>🤝 Registered Participants</h2>
+      <p class="hint">Click “Use” to copy an address into the Receiver field.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Name</th><th>Role</th><th>Address</th><th></th></tr></thead>
+          <tbody id="partRows"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer>Built with Solidity · Hardhat · ethers.js · MetaMask</footer>
+  <script src="app.js"></script>
+</body>
+</html>
